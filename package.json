@@ -5,6 +5,7 @@
   "dependencies": {
     "date-fns": "^1.29.0",
     "moment": "^2.22.2",
+    "npm": "^6.1.0",
     "react": "^16.4.1",
     "react-big-calendar": "^0.19.2",
     "react-dom": "^16.4.1",
