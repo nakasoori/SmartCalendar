@@ -57,10 +57,11 @@ function EventAgenda({ event }) {
 
 function EventMonth({ event }) { //Add time(hours) after title
     return (
-    	<span className='mw-100'>
-    		<u><b style={{color: 'red'}}>{event.title}</b></u>
-    		<text>{event.start.getHours()+':'+event.start.getMinutes()+'-'+event.end.getHours()+':'+event.end.getMinutes()}</text>   
-  		</span>
+    	<div className='mw-100'>
+    		<b style={{color: 'red'}}>{event.title}</b>
+    		{/*<text>{event.start.getHours()+':'+event.start.getMinutes()+'-'
+    	+event.end.getHours()+':'+event.end.getMinutes()}</text> */}  
+  		</div>
   	);
 }
 
@@ -99,7 +100,7 @@ eventStyleGetter = (event, start, end, isSelected) => {
 		console.log('monthsss');
 	    	style = {
 		        backgroundColor: 'darkblue',
-		        borderRadius: '0px',
+		        borderRadius: '5px',
 		        opacity: 0.8,
 		        color: 'red',
 		        border: '0px',
