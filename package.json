@@ -8,8 +8,10 @@
     "npm": "^6.1.0",
     "react": "^16.4.1",
     "react-big-calendar": "^0.19.2",
+    "react-bootstrap": "^0.32.1",
     "react-dom": "^16.4.1",
     "react-scripts": "1.1.4",
+    "reactjs-popup": "^1.1.1",
     "tachyons": "^4.10.0"
   },
   "scripts": {
