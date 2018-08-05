@@ -13,20 +13,20 @@ BigCalendar.momentLocalizer(moment); // or globalizeLocalizer
 var myEventsList = [
 	{
     	'title': 'Class Conference',
-    	'start': new Date(2018, 6, 11, 9, 0, 0, 0),
-    	'end': new Date(2018, 6, 12, 12, 0, 0 ,0),
+    	'start': new Date(2018, 7, 11, 9, 0, 0, 0),
+    	'end': new Date(2018, 7, 12, 12, 0, 0 ,0),
     	desc: 'Big conference for important people'
 	},
     {
         'title': 'Project Meeting',
-        'start': new Date(2018, 6, 12, 10, 30, 0, 0),
-        'end': new Date(2018, 6, 12, 12, 30, 0, 0),
+        'start': new Date(2018, 7, 12, 10, 30, 0, 0),
+        'end': new Date(2018, 7, 12, 12, 30, 0, 0),
         desc: 'Pre-meeting meeting, to prepare for the meeting'
     },
     {
         'title': 'Programming Work',
-        'start':new Date(2018, 6, 12, 12, 0, 0, 0),
-        'end': new Date(2018, 6, 12, 13, 0, 0, 0),
+        'start':new Date(2018, 7, 12, 12, 0, 0, 0),
+        'end': new Date(2018, 7, 12, 13, 0, 0, 0),
         desc: 'Work on Program'
     },
     {
@@ -37,14 +37,14 @@ var myEventsList = [
     },
     {
         'title': 'Woop',
-        'start':new Date(2018, 6, 12, 12, 0, 0, 0),
-        'end': new Date(2018, 6, 12, 13, 0, 0, 0),
+        'start':new Date(2018, 7, 12, 12, 0, 0, 0),
+        'end': new Date(2018, 7, 12, 13, 0, 0, 0),
         desc: 'Testing more'
     },
     {
         'title': 'Relaxing Lunch',
-        'start':new Date(2018, 6, 12, 12, 0, 0, 0),
-        'end': new Date(2018, 6, 12, 13, 0, 0, 0),
+        'start':new Date(2018, 7, 12, 12, 0, 0, 0),
+        'end': new Date(2018, 7, 12, 13, 0, 0, 0),
         desc: 'Power lunch'
     }]
 let allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k]);
@@ -200,6 +200,54 @@ class Calendar extends Component {
 		);
 	}
 
+	customToolbar = (toolbar) => {
+		const goToBack = () => {
+	    	toolbar.date.setMonth(toolbar.date.getMonth() - 1);
+	    	toolbar.onNavigate('prev');
+	  	}
+
+		const goToNext = () => {
+			toolbar.date.setMonth(toolbar.date.getMonth() + 1);
+			toolbar.onNavigate('next');
+		}
+
+		const goToCurrent = () => {
+			const now = new Date();
+			toolbar.date.setMonth(now.getMonth());
+			toolbar.date.setYear(now.getFullYear());
+			toolbar.onNavigate('current');
+		}
+
+		const goToView = (view) => {
+			toolbar.onViewChange(view);
+		}
+
+		const label = () => {
+			const date = moment(toolbar.date);
+			return (
+				<span><b>{date.format('MMMM')}</b><span> {date.format('YYYY')}</span></span>
+			);
+		};
+
+		return (
+				<span>
+					<span>
+						<button onClick={goToBack}>&#8249;</button>
+						<button onClick={goToCurrent}>today</button>
+						<button onClick={goToNext}>&#8250;</button>
+					</span>
+		
+					<label>{label()}</label>
+		
+					<button onClick={view => goToView('month')}>Month</button>
+					<button onClick={view => goToView('week')}>Week</button>
+					<button onClick={view => goToView('day')}>Day</button>
+					<button onClick={view => goToView('agenda')}>Agenda</button>
+				</span>
+		);
+	};
+
+
 	render() {
 		return (
 		  <div>
@@ -215,6 +263,7 @@ class Calendar extends Component {
 			    toobar
 			    eventPropGetter={this.eventStyleGetter}
 			    components={{
+			    	toolbar: this.customToolbar,
                 	month: {
                 		event: this.monthEvent,
              		},
