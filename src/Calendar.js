@@ -67,6 +67,7 @@ class Calendar extends Component {
 		this.state = {
 			currentView: 'month',
 			show: false,
+			event: '',
 			eventTitle: ''
 		}
 	}
@@ -90,7 +91,7 @@ class Calendar extends Component {
 	/* When you click on an already booked slot */
 	onEventClick(event) {
 	    console.log('EVENT CLICK') //Shows the event details provided while booking
-	    this.setState({eventTitle: event.title})
+	    this.setState({event: event, eventTitle: event.title})
 	}
 
 	onViewChange = (view) => {
@@ -141,6 +142,7 @@ class Calendar extends Component {
 	}
 
 	monthEvent = (event) => {
+		console.log(event.event.desc);
 		const popover = (
 	      <Popover id="modal-popover" title="popover">
 	        very popover. such engagement
@@ -163,7 +165,7 @@ class Calendar extends Component {
 		        	textAlign: 'left'
 		        	}} 
 		        	className='mw-100 '>
-		          <strong>{moment(event.start).format('ha')}</strong>	{event.title} 
+		          <strong>{moment(event.event.start).format('h:mma')}</strong>	{event.title} 
 		        </Button>
 
 		        <Modal show={this.state.show} onHide={this.handleClose} 
@@ -174,7 +176,7 @@ class Calendar extends Component {
 		            <Modal.Title>{this.state.eventTitle}</Modal.Title>
 		          </Modal.Header>
 		          <Modal.Body>
-		            <h4>Popover in a modal</h4>
+		            <h4>{moment(this.state.event.start).format('MMM D h:mma')+' - '+moment(this.state.event.end).format('MMM D h:mma')}</h4>
 		            <p>
 		              there is a{' '}
 		              <OverlayTrigger overlay={popover}>
@@ -183,7 +185,7 @@ class Calendar extends Component {
 		              here
 		            </p>
 
-		            <h4>Tooltips in a modal</h4>
+		            <h4>{this.state.event.desc}</h4>
 		            <p>
 		              there is a{' '}
 		              <OverlayTrigger overlay={tooltip}>
@@ -237,7 +239,7 @@ class Calendar extends Component {
 						<button onClick={goToNext}>&#8250;</button>
 					</span>
 		
-					<label>{label()}</label>
+					<label style={{position: 'centered'}}>{label()}</label>
 		
 					<button onClick={view => goToView('month')}>Month</button>
 					<button onClick={view => goToView('week')}>Week</button>
