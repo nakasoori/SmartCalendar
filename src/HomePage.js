@@ -15,7 +15,7 @@ class HomePage extends Component {
       <div className="bg-black vh-100 cf">
         <Sidebar/>
         <div className="fl w-80 pa2">
-          <h1 className='white tc'>Smart Calendar</h1>
+          <h1 className='white tc'><b>Smart Calendar</b></h1>
           <Calendar />
         </div>
       </div>

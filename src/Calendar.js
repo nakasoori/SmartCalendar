@@ -122,6 +122,8 @@ class Calendar extends Component {
 	   				color: 'purple'
 	   			}
 	   			break;
+	   		case 'day':
+	   			break;
 	   		default:
 	   			console.err('ERROR');
 	   			break;
@@ -170,7 +172,7 @@ class Calendar extends Component {
 
 		        <Modal show={this.state.show} onHide={this.handleClose} 
 		        	style={{position: 'absolute',
-							top: '25%'
+							top: '25%',
 					}}>
 		          <Modal.Header closeButton>
 		            <Modal.Title>{this.state.eventTitle}</Modal.Title>
@@ -204,12 +206,28 @@ class Calendar extends Component {
 
 	customToolbar = (toolbar) => {
 		const goToBack = () => {
-	    	toolbar.date.setMonth(toolbar.date.getMonth() - 1);
+			switch(this.state.currentView){
+				case 'month':
+					toolbar.date.setMonth(toolbar.date.getMonth() - 1);
+					break;
+				case 'day':
+					toolbar.date.setDate(toolbar.date.getDate() - 1);
+					break;
+			}
+	    	
 	    	toolbar.onNavigate('prev');
 	  	}
 
 		const goToNext = () => {
-			toolbar.date.setMonth(toolbar.date.getMonth() + 1);
+			switch(this.state.currentView){
+				case 'month':
+					toolbar.date.setMonth(toolbar.date.getMonth() + 1);
+					break;
+				case 'day':
+					toolbar.date.setDate(toolbar.date.getDate() + 1);
+					break;
+			}
+			
 			toolbar.onNavigate('next');
 		}
 
@@ -227,24 +245,26 @@ class Calendar extends Component {
 		const label = () => {
 			const date = moment(toolbar.date);
 			return (
-				<span><b>{date.format('MMMM')}</b><span> {date.format('YYYY')}</span></span>
+				<span><b>{date.format('MMMM') + ' ' + date.format('YYYY')}</b></span>
 			);
 		};
 
 		return (
-				<span>
-					<span>
-						<button onClick={goToBack}>&#8249;</button>
-						<button onClick={goToCurrent}>today</button>
-						<button onClick={goToNext}>&#8250;</button>
+				<span className='mw-100'>
+					<span className='fl w-third pa2'>
+						<Button onClick={goToBack}>&#8249;</Button>
+						<Button onClick={goToCurrent}>today</Button>
+						<Button onClick={goToNext}>&#8250;</Button>
 					</span>
 		
-					<label style={{position: 'centered'}}>{label()}</label>
+					<label className='fl w-third pa2 tc'>{label()}</label>
 		
-					<button onClick={view => goToView('month')}>Month</button>
-					<button onClick={view => goToView('week')}>Week</button>
-					<button onClick={view => goToView('day')}>Day</button>
-					<button onClick={view => goToView('agenda')}>Agenda</button>
+					<span className='fl w-third pa2'>
+						<Button className='fr' onClick={view => goToView('week')}>Week</Button>
+						<Button className='fr' onClick={view => goToView('day')}>Day</Button>
+						<Button className='fr' onClick={view => goToView('agenda')}>Agenda</Button>
+						<Button className='fr' onClick={view => goToView('month')}>Month</Button>
+					</span>
 				</span>
 		);
 	};
